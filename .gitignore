@@ -1,0 +1,31 @@
+# Ambiente virtual
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribuição
+build/
+dist/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Variáveis de ambiente
+.env
+
+# Modelos treinados
+models/trained/
+models/checkpoints/
+
+# Dados brutos (se forem grandes)
+data/raw/
+
+# Logs
+*.log
