@@ -23,6 +23,7 @@ dist/
 # Modelos treinados
 models/trained/
 models/checkpoints/
+notebooks/
 
 # Dados brutos (se forem grandes)
 data/raw/
