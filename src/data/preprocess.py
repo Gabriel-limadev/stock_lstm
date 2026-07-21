@@ -29,7 +29,6 @@ def validate_data(df: pd.DataFrame):
         "Close",
         "Volume"
     ]
-
     missing = set(required_columns) - set(df.columns)
 
     if missing:
@@ -40,17 +39,12 @@ def validate_data(df: pd.DataFrame):
 
     return df
 
-def preprocess_data(raw_path: str, processed_path: str)-> pd.DataFrame:
+def preprocess_data(df: pd.DataFrame)-> pd.DataFrame:
     '''
     Preprocessa os dados brutos e salva o resultado.
     '''
-    df = pd.read_csv(raw_path)
     df_validated = validate_data(df)
 
     df_cleaned = clean_data(df_validated)
 
-    print(df_cleaned.head())
-    df_cleaned.to_csv(
-        processed_path,
-        index=False
-    )
+    return df_cleaned

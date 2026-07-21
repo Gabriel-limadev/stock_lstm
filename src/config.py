@@ -1,28 +1,42 @@
 """
 Configurações gerais do projeto.
 """
+from pathlib import Path
 
-# ---------- stock ticker
-STOCK = "PETR4.SA"
+# ==================================================
+# PATHS
+# ==================================================
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIRECTORY = BASE_DIR / "data"
 
-# ---------- PATHS
-# Data
-RAW_PATH = "data/raw/stock.csv"
-PROCESSED_PATH = "data/processed/stock_processed.csv"
-FEATURES_PATH = "data/processed/stock_features.csv"
-# Model
-SCALER_PATH = "src/models/scaler.pkl"
-MODEL_PATH = "src/models/lstm_model.keras"
-METADATA_PATH = "src/models/metadata.json"
-# Reports
-REPORTS_PATH = "src/reports"
-TRAINING_HISTORY_PATH = "src/reports/training_history.csv"
-REPORT_PREDICTION_PATH = "src/reports/prediction.png"
+RAW_DIRECTORY = DATA_DIRECTORY / "raw"
+PROCESSED_DIRECTORY = DATA_DIRECTORY / "processed"
 
-# ---------- DATASET
+RAW_PATH = RAW_DIRECTORY / "stock.csv"
+PROCESSED_PATH = PROCESSED_DIRECTORY / "stock_processed.csv"
+FEATURES_PATH = PROCESSED_DIRECTORY / "stock_features.csv"
+
+MODELS_DIRECTORY = BASE_DIR / "models"
+
+REPORTS_DIRECTORY = BASE_DIR / "reports"
+
+TRAINING_HISTORY_PATH = REPORTS_DIRECTORY / "training_history.csv"
+REPORT_PREDICTION_PATH = REPORTS_DIRECTORY / "prediction.png"
+
+MODEL_FILE = "model.keras"
+SCALER_FILE = "scaler.pkl"
+METADATA_FILE = "metadata.json"
+
+# ==================================================
+# DATASET
+# ==================================================
 TRAIN_SIZE = 0.8
 WINDOW_SIZE = 30
 
+# ==================================================
+# FEATURES
+# ==================================================
+# A ordem das features não deve ser alterada após o treinamento.
 FEATURES = [
     "Open",
     "High",
@@ -39,13 +53,17 @@ FEATURES = [
 
 TARGET = "Close"
 
-# ---------- LSTM
+# ==================================================
+# MODEL
+# ==================================================
 LSTM_UNITS_1 = 64
 LSTM_UNITS_2 = 32
 DROPOUT = 0.2
 DENSE_UNITS = 16
 
-# ---------- TREINAMENTO
+# ==================================================
+# TREINAMENTO
+# ==================================================
 EPOCHS = 100
 BATCH_SIZE = 32
 VALIDATION_SPLIT = 0.2
