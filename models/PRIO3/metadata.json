@@ -1,0 +1,9 @@
+{
+    "input_shape": [
+        30,
+        11
+    ],
+    "epochs": 100,
+    "batch_size": 32,
+    "features": 11
+}

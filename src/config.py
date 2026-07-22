@@ -20,9 +20,6 @@ MODELS_DIRECTORY = BASE_DIR / "models"
 
 REPORTS_DIRECTORY = BASE_DIR / "reports"
 
-TRAINING_HISTORY_PATH = REPORTS_DIRECTORY / "training_history.csv"
-REPORT_PREDICTION_PATH = REPORTS_DIRECTORY / "prediction.png"
-
 MODEL_FILE = "model.keras"
 SCALER_FILE = "scaler.pkl"
 METADATA_FILE = "metadata.json"

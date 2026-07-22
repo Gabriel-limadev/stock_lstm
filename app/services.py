@@ -1,5 +1,7 @@
 import joblib
 from pathlib import Path
+import pandas as pd
+from pandas.tseries.offsets import BDay
 
 from tensorflow.keras.models import load_model
 
@@ -34,7 +36,13 @@ def predict_next_close(stock: str) -> PredictionResponse:
     Realiza a previsão do próximo preço de fechamento para a ação informada.
     """
 
-    stock = stock.upper()
+    stock = stock.strip().upper()
+    
+    if stock.endswith(".S"):
+        stock += "A"
+    elif not stock.endswith(".SA"):
+        stock += ".SA"
+
     stock_name = stock.replace(".SA", "")
     model_directory = Path(MODELS_DIRECTORY) / stock_name
     model_path = model_directory / "model.keras"
@@ -79,10 +87,14 @@ def predict_next_close(stock: str) -> PredictionResponse:
         last_row.reshape(1, -1)
     )[0][target_index]
 
+    last_date = df["Date"].iloc[-1]
+        
+    prediction_date = last_date + BDay(1)
+
     return PredictionResponse(
         stock=stock,
-        prediction_date=str(df["Date"].iloc[-1].date()),
+        last_available_date=str(last_date.date()),
+        prediction_date=str(prediction_date.date()),
         last_close=float(df["Close"].iloc[-1]),
         predicted_close=float(prediction)
     )
-

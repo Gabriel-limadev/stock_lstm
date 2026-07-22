@@ -1,7 +1,9 @@
+from datetime import datetime, timedelta
+
 import pandas as pd
 import yfinance as yf
 
-def download_market_data(stock: str, start_date: str = "2020-01-01", end_date: str = "2025-12-31") -> pd.DataFrame:
+def download_market_data(stock: str, start_date: str = "2020-01-01", end_date: str | None = None) -> pd.DataFrame:
     '''
     Download stock data from Yahoo Finance.
 
@@ -13,6 +15,8 @@ def download_market_data(stock: str, start_date: str = "2020-01-01", end_date: s
     Returns:
     pd.DataFrame: The downloaded stock data.
     '''
+    if end_date is None:
+        end_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     df = yf.download(
         stock,
         start=start_date,
@@ -23,8 +27,9 @@ def download_market_data(stock: str, start_date: str = "2020-01-01", end_date: s
 
     if df.empty:
         raise ValueError(
-            f"Nenhum dado encontrado para '{stock}'."
+            f"A ação '{stock}' não foi identificada no Yahoo Finance."
         )
+        
     # Converte o índice (Date) em coluna
     df.reset_index(inplace=True)
 

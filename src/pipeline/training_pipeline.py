@@ -13,12 +13,14 @@ from src.utils.plots import plot_predictions
 
 
 def run_training_pipeline(stock: str):
-
+    """
+    Realiza o pipeline completo de treinamento do modelo para a ação especificada.
+    """
     RAW_DIRECTORY.mkdir(
         parents=True,
         exist_ok=True
     )
-
+    
     PROCESSED_DIRECTORY.mkdir(
         parents=True,
         exist_ok=True
@@ -28,16 +30,14 @@ def run_training_pipeline(stock: str):
         parents=True,
         exist_ok=True
     )
+    stock = stock.strip().upper()
+
+    if stock.endswith(".S"):
+        stock += "A"
+    elif not stock.endswith(".SA"):
+        stock += ".SA"
 
     stock_name = stock.replace(".SA", "")
-    model_directory = Path(MODELS_DIRECTORY) / stock_name
-    model_directory.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-    model_path = model_directory / MODEL_FILE
-    scaler_path = model_directory / SCALER_FILE
-    metadata_path = model_directory / METADATA_FILE
 
     print("=" * 60)
     print(f"Treinando modelo para {stock}")
@@ -65,7 +65,7 @@ def run_training_pipeline(stock: str):
 
     # =========================
     # Feature Engineering
-    # =========================
+    # =========================f
 
     print("3 - Criando features...")
 
@@ -76,9 +76,13 @@ def run_training_pipeline(stock: str):
     # =========================
     # Dataset LSTM
     # =========================
-
+    
     print("4 - Preparando dataset LSTM...")
 
+    model_directory = Path(MODELS_DIRECTORY) / stock_name
+    model_directory.mkdir(parents=True, exist_ok=True)
+    scaler_path = model_directory / SCALER_FILE
+        
     X_train, y_train, X_test, y_test = prepare_lstm_dataset(
         df,
         scaler_path,
@@ -93,6 +97,14 @@ def run_training_pipeline(stock: str):
     # =========================
     # Treinamento
     # =========================
+    
+    metadata_path = model_directory / METADATA_FILE
+    model_path = model_directory / MODEL_FILE
+    report_dir = REPORTS_DIRECTORY / stock_name
+    report_dir.mkdir(parents=True, exist_ok=True)
+
+    TRAINING_HISTORY_PATH = report_dir / "training_history.csv"
+    REPORT_PREDICTION_PATH = report_dir / "prediction.png"
 
     print("5 - Treinando modelo...")
 
