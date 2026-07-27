@@ -68,7 +68,6 @@ stock_lstm/
 │   | model/
 |   │    ├── evaluate.py
 │   │    ├── lstm.py
-|   │    ├── predict.py
 │   │    └── train.py
 │   | pipeline/
 │   │    └── training_pipeline.py
