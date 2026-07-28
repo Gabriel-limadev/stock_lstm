@@ -8,6 +8,7 @@ O objetivo do projeto é construir um pipeline completo de previsão de séries 
 
 ## ▶️ Video Apresentação
 ``` code
+https://youtu.be/YlhVGHXbiHE
 ...
 ```
 
